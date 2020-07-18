@@ -9,36 +9,62 @@ local roblo3 = require(game:GetService("ServerScriptService").Roblo3)
 local dynamodb = roblo3.resource("dynamodb")
 ```
 
-### `dynamodb.Table`
+### `dynamodb:Table`
 Returns an object representing the DynamoDB table with the given name:
 
 ```lua
 local table = dynamodb.Table("name")
 ```
 
-#### Parameters
-| Parameter Name | Type   | Required | Description                    |
-| -------------- | ------ | -------- | ------------------------------ |
-| `name`         | String | Yes      | The name of the DynamoDB table |
+??? Info "Parameters"
+    | Parameter Name | Type   | Required | Description                    |
+    | -------------- | ------ | -------- | ------------------------------ |
+    | `name`         | String | Yes      | The name of the DynamoDB table |
 
-#### Returns
-| Return Name                        | Description                                     |
-| ---------------------------------- | ------------------------------------------------ |
-| [`dynamodb.Table`](#dynamodbtable) | An object representing the DynamoDB table given. |
+??? Success "Return Value"
+    | Return Name                        | Description                                      |
+    | ---------------------------------- | ------------------------------------------------ |
+    | [`dynamodb.Table`](#dynamodbtable) | An object representing the DynamoDB table given |
 
-#### Functions
-| Function Name  | Parameters | Description                        |
-| -------------- | ---------- | ---------------------------------- |
-| [`GetTableInfo`](#gettableinfo) | `None`     | Gets info about the table from AWS |
+???+ Info "Functions"
+    | Function Name  | Description                        |
+    | -------------- | ---------------------------------- |
+    | [`GetItem`](#getitem) | Gets the given item from DynamoDB table |
+    | [`GetTableInfo`](#gettableinfo) | Gets info about the table from AWS |
 
-##### `GetTableInfo`
+#### `GetItem`
+Returns the requested item, based on the key provided.
+
+```lua
+local item = table:GetItem(
+    ["Key"] = {
+        ["key name"] = "key value"
+    }
+)
+```
+
+??? Info "Parameters"
+    `GetItem` does not take parameters in normal Lua fashion. Instead, it takes a dictionary of key-value pairs and parses them to its arguments. The values shown below are parsed:
+
+    | Parameter Name | Type       | Required | Description |
+    | -------------- | ---------- | -------- | ----------- |
+    | Key            | Dictionary | Yes      | The key-value pair corresponding to the key provided when you created the DynamoDB table. If you specified a simple key, only the primary key should be provided. If you specified a composite key, both the primary key and sort key must be provided. |
+
+??? Success "Return Value"
+    | Return Name | Description |
+    | ----------- | ----------- |
+    | Item        | A Lua table with the requested item, or `nil` if DynamoDB didn't return an item (i.e., there wasn't an item that matched the key provided). The structure of this item will be dependent on your DynamoDB table structure and the item DynamoDB returned.
+    | Response Data | A string of JSON data that is the raw, unparsed response from DynamoDB.
+    | Raw Response  | A Lua table of the raw response, semi-parsed response from the `Requests` handler. This contains extra data that the `Requests` handler uses to determine automatic-retry and error propagation. The `Response` key contained in this item corresponds to the "Response Data" return value.
+
+#### `GetTableInfo`
 Returns info about the table; this info is retrieved from AWS.
 
 ```lua
 local tableInfo = table:GetTableInfo()
 ```
 
-??? Note "`GetTableInfo` Response Structure"
+??? Success "Response Structure"
     ```JSON
     { 
         "ArchivalSummary": { 

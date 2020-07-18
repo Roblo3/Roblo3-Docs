@@ -3,6 +3,6 @@
 # Roblo3 Documentation
 Roblo3 is an unofficial software (game) development kit for Roblox that allows Roblox games to leverage resources provided by Amazon Web Services.
 
-This repository contains the documentation for the Roblo3 SDK. Currently, this site is built and deployed to Netlify manually, and is accessible at https://roblo3.netlify.app/.
+This repository contains the documentation for the Roblo3 SDK. This repository auto-deploys to https://roblo3.netlify.app/ upon a successful push to the repository on the `master` branch.
 
 For the Roblo3 SDK itself, please visit https://github.com/Roblo3/Roblo3.

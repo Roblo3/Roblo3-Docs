@@ -12,6 +12,9 @@ theme:
     scheme: default
     primary: red
     accent: red
+  icon:
+    logo: material/book-open-variant
+  favicon: assets/favicon.png
 
 markdown_extensions:
   - admonition
