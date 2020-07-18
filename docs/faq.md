@@ -7,4 +7,4 @@
     
     If this is the case for you, then you are advised to publish the game to Roblox and test the game there, looking in the Developer Console (press the F9 function key on your keyboard to access this) to see if the response is as expected.
 
-    If you are receiving an `InvalidSignatureException` for a reason other than the `os.time()` not returning UTC time, check the error message provided to see if you can remedy it yourself; otherwise, contact [tycoonlover1359](https://devforum.roblox.com/u/tycoonlover1359/summary) either via the Roblox Developer forum or on Discord (@tycoonlover1359#6970), or submit an issue on the [Roblo3 GitHub repository](https://github.com/Roblo3/Roblo3).
+    If you are receiving an `InvalidSignatureException` for a reason other than `os.time()` not returning UTC time, check the error message provided to see if you can remedy it yourself; otherwise, contact [tycoonlover1359](https://devforum.roblox.com/u/tycoonlover1359/summary) either via the Roblox Developer forum or on Discord (@tycoonlover1359#6970), or submit an issue on the [Roblo3 GitHub repository](https://github.com/Roblo3/Roblo3).

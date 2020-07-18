@@ -1,6 +1,6 @@
 # Roblox Games and AWS Identity and Access Management
 
-If you already know about Identity and Access Management, the principle of least privilege, and compartmentalization, then you can skip the first two sections to *How does IAM apply to Roblox Games?*
+If you already know about Identity and Access Management, the principle of least privilege, and compartmentalization, then you can skip the first two sections to [*How does IAM apply to Roblox Games?*](#how-does-iam-apply-to-roblox-games)
 
 ## What is Identity and Access Management?
 One important of any Cloud Computing/Infrastructure-as-a-Service provider (such as Amazon Web Services, but also includes alternatives such as Google Cloud Platform, Microsoft Azure, and IBM Cloud, among numerous others) is **Identity and Access Management**, or IAM.
