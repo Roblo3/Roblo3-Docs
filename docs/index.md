@@ -1,17 +1,12 @@
-# Welcome to MkDocs
+---
+title: Home
+---
+# Roblo3 - AWS SDK for Roblox Lua
+Roblo3 is an **unofficial** software (or rather, game) development kit that acts as a wrapper for the Amazon Web Services (AWS) service endpoints. Roblo3 is designed for use by developers on the Roblox platform, and adheres to Roblox limitations as best as possible.
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Roblo3 is structured similarly and pays homage to the official AWS Boto3 SDK for Python.
 
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Key Features
+- Automatic generation and signage of HTTP requests to AWS endpoints
+- Automatic retry of failed HTTP requests, wherever necessary
+- Covers as much as the AWS API as possible, given Roblox programming limitations

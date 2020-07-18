@@ -1,0 +1,8 @@
+# Roblox Security
+When using the Roblo3 SDK, it should be noted that Roblox, as of June 15, 2020, has no way of properly securing and managing API secrets and account credentials.
+For many web APIs, this lack of security is somewhat fine, as many APIs don't allow access to features of an account or resource that could incur large, unexpected costs; in many cases, these APIs only allow access to a small subset of resources (for instance, Trello's API only allows to access to the lists and cards within boards; no account information).
+
+However, with Amazon Web Services, extremely **large** costs (upwards of thousands or hundreds of thousands of dollars per month) can be occurred if access to credentials is not properly secured.
+Until Roblox adds a way of securely storing API secrets, your AWS secrets will likely be in plain text (or near plain text, such as obfuscation through storage in a DataStore, though this only does so much). It is up to you or your development team if this is a security risk you are willing to take.
+
+Additionally, regardless of the ability (or lack thereof) to securely store secrets in Roblox, the Roblo3 SDK should only ever be accessed by the game server hosting your Roblox game. Roblox clients should **never** receive direct access to account credentials or the SDK due to the sensitivity of materials that can be accessed via these materials; as with any Roblox game, **never trust the client** with sensitive items such as API keys.

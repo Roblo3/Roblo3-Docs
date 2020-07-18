@@ -1,0 +1,4 @@
+collapse: true
+
+arrange:
+    - accessing-service-resources.md
