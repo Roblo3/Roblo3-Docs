@@ -1,5 +1,8 @@
 site_name: Roblo3
 
+repo_name: Roblo3/Roblo3-Docs
+repo_url: https://github.com/Roblo3/Roblo3-Docs
+
 theme:
   name: 'material'
   features:
