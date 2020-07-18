@@ -49,13 +49,17 @@ local item = table:GetItem(
     | Parameter Name | Type       | Required | Description |
     | -------------- | ---------- | -------- | ----------- |
     | Key            | Dictionary | Yes      | The key-value pair corresponding to the key provided when you created the DynamoDB table. If you specified a simple key, only the primary key should be provided. If you specified a composite key, both the primary key and sort key must be provided. |
+    | ConsistentRead | Boolean    | No       | Determines whether or not *strongly* consitent reads are used; if this is not specified or set to false, *eventually* consitent reads are used. |
+    | ExpressionAttributeNames | Dictionary | No | A dictionary of substitution tokens for names within an expression. For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#DDB-PutItem-request-ExpressionAttributeNames). |
+    | ProjectionExpression | String | No | A string indicating which attributes to retrieve from the table. For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#DDB-GetItem-request-ProjectionExpression). |
+    | ReturnConsumedCapacity | String | No | Determines the amount of detail about used provisioned capacity that will be returned by DynamoDB. The Roblo3 SDK defaults this to "TOTAL". For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#DDB-PutItem-request-ReturnConsumedCapacity). |
 
 ??? Success "Return Value"
     | Return Name | Description |
     | ----------- | ----------- |
-    | Item        | A Lua table with the requested item, or `nil` if DynamoDB didn't return an item (i.e., there wasn't an item that matched the key provided). The structure of this item will be dependent on your DynamoDB table structure and the item DynamoDB returned.
-    | Response Data | A string of JSON data that is the raw, unparsed response from DynamoDB.
-    | Raw Response  | A Lua table of the raw response, semi-parsed response from the `Requests` handler. This contains extra data that the `Requests` handler uses to determine automatic-retry and error propagation. The `Response` key contained in this item corresponds to the "Response Data" return value.
+    | Item        | A Lua table of the requested item, or `nil` if DynamoDB didn't return an item (i.e., there wasn't an item that matched the key provided).
+    | Body | A Lua table that contains the original body from the request, ran through a regular JSON parser but not the DynamoDB JSON parser.
+    | Raw Response  | A Lua table of the raw, semi-parsed response from the `Requests` handler. This contains extra data that the `Requests` handler uses to determine automatic-retry and error propagation.
 
 #### `GetTableInfo`
 Returns info about the table; this info is retrieved from AWS.
@@ -188,3 +192,37 @@ local tableInfo = table:GetTableInfo()
         "TableStatus": "string"
     }
     ```
+
+#### `PutItem`
+Creates **or** updates an item with the given key and values.
+
+```lua
+local response = table:PutItem(
+    ["Item"] = {
+        ["name"] = "value"
+    }
+)
+```
+
+???+ Bug "`ReturnItemCollectionMetrics` Returns Nothing"
+    During testing, it was found that `ReturnItemCollectionMetrics` does not return any info despite being set to `SIZE` and sent with the payload body; this situation occurred when testing in both Roblox Studio and Postman. As such, this appears to be a limitation of Amazon Web Services. Do not rely upon this metric being returned from DynamoDB.
+
+??? Info "Parameters"
+    `PutItem` does not take parameters in normal Lua fashion. Instead, it takes a dictionary of key-value pairs and parses them to its arguments. The values shown below are parsed:
+
+    | Parameter Name | Type | Required | Description |
+    | --------------- | ---- | -------- | ----------- |
+    | Item | Dictionary | Yes | The key-value pairs that correspond to desired item's attributes. Note that your partition key must be included in this dictionary; not doing so **will** throw an error when the SDK receives a response from DynamoDB. |
+    | ConditionExpression | String | No | A condition that must be satisfied, otherwise the update will fail gracefully. See the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html#DDB-UpdateItem-request-ConditionExpression) and [AWS DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.ConditionExpressions.html) for more information. |
+    | ExpressionAttributeNames | Dictionary | No | A dictionary of substitution tokens for names within an expression. For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#DDB-PutItem-request-ExpressionAttributeNames). |
+    | ExpressionAttributeValues | Dictionary | No | A dictionary of values that will be substitued in an expression. For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#DDB-PutItem-request-ExpressionAttributeValues). |
+    | ReturnConsumedCapacity | String | No | Determines the amount of detail about used provisioned capacity that will be returned by DynamoDB. The Roblo3 SDK defaults this to "TOTAL". For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#DDB-PutItem-request-ReturnConsumedCapacity). |
+    | ReturnItemCollectionMetrics | String | No | Determines the metrics about the item that are returned by DynamoDB. For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#DDB-PutItem-request-ReturnItemCollectionMetrics). **Note:** During testing in both Roblox Studio and Postman, this parameter was found to return nothing from DynamoDB. Do not rely upon this metric being returned from DynamoDB. |
+    | ReturnValues | String | No | Determines what values about the specified item prior to being changed by `PutItem`, if any are being returned. For more information, see the [AWS DynamoDB API Documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#DDB-PutItem-request-ReturnValues). |
+
+??? Success "Return Values"
+    | Return Name | Description |
+    | ----------- | ----------- |
+    | Response Data | A Lua table containing the metrics specified in the parameters that are to be returned. This has been parsed and translated from DynamoDB JSON to regular Lua table. |
+    | Body | A Lua table that contains the original body from the request, ran through a regular JSON parser but not the DynamoDB JSON parser. |
+    | Raw Response | A Lua table of the raw, semi-parsed response from the `Requests` handler. This contains extra data that the `Requests` handler uses to determine automatic-retry and error propagation. |
