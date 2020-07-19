@@ -278,7 +278,7 @@ local response = table:PutItem(
 Updates the requested item, based on the key provided.
 
 ```lua
-local item = table:UpdateItem(
+local response = table:UpdateItem(
     ["Key"] = {
         ["key name"] = "key value"
     },
