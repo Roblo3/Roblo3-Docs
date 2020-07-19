@@ -39,7 +39,7 @@ local table = dynamodb.Table("name")
 Deletes the requested item, based on the key provided.
 
 ```lua
-local item = table:DeleteItem(
+local response = table:DeleteItem(
     ["Key"] = {
         ["key name"] = "key value"
     }
@@ -238,7 +238,15 @@ Creates **or** replaces the item with the given key and values.
 ```lua
 local response = table:PutItem(
     ["Item"] = {
-        ["name"] = "value"
+        ["name"] = "value",
+        ["new"] = "values",
+        ["are"] = {
+            ["replaced"] = "when",
+            ["this"] = {
+                "is",
+                "called"
+            }
+        }
     }
 )
 ```
