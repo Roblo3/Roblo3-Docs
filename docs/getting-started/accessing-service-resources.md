@@ -15,7 +15,7 @@ Next, to access the DynamoDB Service resource, we call the `resource` function o
 
 ```lua
 local awsArgs = {
-    ["accessKeyID"] = "ACCESS_KEY_ID",
+    ["accessKeyId"] = "ACCESS_KEY_ID",
     ["secretAccessKey"] = "SECRET_ACCESS_KEY",
     ["regionName"] = "us-west-2"
 }
