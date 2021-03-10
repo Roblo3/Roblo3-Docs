@@ -35,13 +35,13 @@ local dynamodb = roblo3.resource("dynamodb", awsArgs)
 Next, we need to get the `TestTable` DynamoDB object so we can start using its internal functions. We do this by calling the `Table` function from DynamoDB and passing in the name of the DynamoDB table we want to access; in this case, we'll pass in "TestTable":
 
 ```lua
-local testTable = dynamodb.Table("TestTable")
+local testTable = dynamodb:Table("TestTable")
 ```
 
 After this, we now have a `TestTable` DynamoDB object we can interact with. Since we wanted to get the ARN of the table, we first need to call `DescribeTable` on our table object to get its info from AWS:
 
 ```lua
-local tableInfo = TestTable.DescribeTable()
+local tableInfo = TestTable:DescribeTable()
 ```
 
 The `DescribeTable` function returns a dictionary of key-value pairs we can use to access our data. In our case, since we want the ARN of the table, we'll access the `TableArn` key (which, in our case, is stored in the top-most level of the dictionary) since this is how AWS returns the data to us:
@@ -70,9 +70,9 @@ local awsArgs = {
 
 local dynamodb = roblo3.resource("dynamodb", awsArgs)
 
-local TestTable = dynamodb.Table("TestTable")
+local TestTable = dynamodb:Table("TestTable")
 
-local tableInfo = TestTable.DescribeTable()
+local tableInfo = TestTable:DescribeTable()
 local tableArn = tableInfo.TableArn
 
 print(tableArn)
