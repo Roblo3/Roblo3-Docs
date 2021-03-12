@@ -72,7 +72,7 @@ local dynamodb = roblo3.resource("dynamodb", awsArgs)
 
 local TestTable = dynamodb:Table("TestTable")
 
-local tableInfo = TestTable:DescribeTable()
+local tableInfo = TestTable:GetTableInfo()
 local tableArn = tableInfo.TableArn
 
 print(tableArn)
